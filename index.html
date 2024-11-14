@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            background-color: #121212; /* Dark background */
+            color: #E0E0E0; /* Light text */
+        }
+        #taskList {
+            width: 50%;
+            border-right: 1px solid #333; /* Darker border */
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #1E1E1E; /* Darker pane */
+        }
+        #taskForm {
+            width: 50%;
+            padding: 20px;
+            background-color: #1E1E1E; /* Darker pane */
+        }
+        h2 {
+            color: #FFD700; /* Gold color for headers */
+        }
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #333; /* Darker border */
+            margin-bottom: 10px;
+            background-color: #2A2A2A; /* Task background */
+            border-radius: 5px; /* Rounded corners */
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #B0BEC5; /* Light grey for completed tasks */
+        }
+        input[type="text"] {
+            width: calc(100% - 90px); /* Adjust width to fit button */
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333; /* Input background */
+            color: #E0E0E0; /* Input text color */
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #FFD700; /* Gold button */
+            color: #121212; /* Dark text for button */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #FFC107; /* Lighter gold on hover */
+        }
+        button:focus {
+            outline: none; /* Remove outline on focus */
+        }
+        .delete-button {
+            background-color: transparent; /* Transparent for delete button */
+            color: #FF5252; /* Red color for delete */
+            font-size: 20px; /* Larger size for delete icon */
+            cursor: pointer;
+            border: none; /* Remove border */
+            transition: color 0.3s;
+        }
+        .delete-button:hover {
+            color: #FF1744; /* Lighter red on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="taskList">
+        <h2>Tasks</h2>
+        <div id="tasks"></div>
+    </div>
+
+    <div id="taskForm">
+        <h2>Add Task</h2>
+        <input type="text" id="taskInput" placeholder="Enter a new task" />
+        <button id="addTaskButton">Add Task</button>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById('taskInput');
+        const addTaskButton = document.getElementById('addTaskButton');
+        const tasksContainer = document.getElementById('tasks');
+
+        addTaskButton.addEventListener('click', () => {
+            const taskText = taskInput.value.trim();
+            if (taskText) {
+                addTask(taskText);
+                taskInput.value = '';
+            }
+        });
+
+        function addTask(taskText) {
+            const taskDiv = document.createElement('div');
+            taskDiv.classList.add('task');
+
+            const taskLabel = document.createElement('span');
+            taskLabel.textContent = taskText;
+            taskDiv.appendChild(taskLabel);
+
+            const completeButton = document.createElement('button');
+            completeButton.textContent = 'Complete';
+            completeButton.onclick = () => {
+                taskLabel.classList.toggle('completed');
+            };
+            taskDiv.appendChild(completeButton);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '❌';
+            deleteButton.classList.add('delete-button');
+            deleteButton.onclick = () => {
+                tasksContainer.removeChild(taskDiv);
+            };
+            taskDiv.appendChild(deleteButton);
+
+ tasksContainer.appendChild(taskDiv);
+        }
+    </script>
+
+</body>
+</html>
